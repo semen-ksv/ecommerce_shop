@@ -439,7 +439,7 @@ function enableMouseSelection ( dt )
  *
  * @param {DataTable.Api} api      DataTable to trigger events on
  * @param  {boolean}      selected true if selected, false if deselected
- * @param  {string}       type     Item type acting on
+ * @param  {string}       type     Book type acting on
  * @param  {boolean}      any      Require that there are values before
  *     triggering
  * @private
@@ -600,8 +600,8 @@ function init ( ctx ) {
  *
  * @param  {DataTable.Api} dt   DataTable
  * @param  {string}        type Row or column range selector
- * @param  {object}        idx  Item index to select to
- * @param  {object}        last Item index to select from
+ * @param  {object}        idx  Book index to select to
+ * @param  {object}        last Book index to select from
  * @private
  */
 function rowColumnRange( dt, type, idx, last )
