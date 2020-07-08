@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView
-from .models import Book
+from django.utils import timezone
+
+from .models import Book, OrderItem, Order
 
 
 def checkout(request):
@@ -19,3 +21,24 @@ class BookDetailView(DetailView):
     template_name = 'book.html'
     context_object_name = 'book'
 
+
+def add_to_cart(request, slug):
+    book = get_object_or_404(Book, slug=slug)
+    order_book, created = OrderItem.objects.get_or_create(
+        item=book,
+        user=request.user,
+        ordered=False
+    )
+    order_queriset = Order.objects.filter(user=request.user, ordered=False)
+    if order_queriset.exists():
+        order = order_queriset[0]
+        if order.items.filter(item__slug=book.slug).exists():
+            order_book.quantity += 1
+            order_book.save()
+        else:
+            order.items.add(order_book)
+    else:
+        order_date = timezone.now()
+        order = Order.objects.create(user=request.user, ordered_date=order_date)
+        order.items.add(order_book)
+    return redirect('shop:book', slug=slug)

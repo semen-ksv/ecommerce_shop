@@ -33,6 +33,10 @@ class Book(models.Model):
     def get_absolute_url(self):
         return reverse('shop:book', kwargs={'slug': self.slug})
 
+    def get_add_to_cart_url(self):
+        return reverse('shop:add_to_cart', kwargs={'slug': self.slug})
+
+
 class Author(models.Model):
     name = models.CharField(max_length=150, unique=True)
 
@@ -41,9 +45,13 @@ class Author(models.Model):
 
 class OrderItem(models.Model):
     item = models.ForeignKey(Book, on_delete=models.CASCADE, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                            on_delete=models.CASCADE, blank=True, null=True)
+    ordered = models.BooleanField(default=False)
+    quantity = models.IntegerField(default=1)
 
     def __str__(self):
-        return self.item
+        return f'{self.quantity} of {self.item.title}'
 
 
 class Order(models.Model):
