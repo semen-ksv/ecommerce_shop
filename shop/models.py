@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 
 GENRE_CHOICES = (
     ('A', 'Affairs'),
@@ -20,6 +21,7 @@ class Book(models.Model):
     author = models.ManyToManyField('Author', blank=True, related_name='book')
     genre = models.CharField(choices=GENRE_CHOICES, max_length=1)
     label = models.CharField(choices=LABEL_CHOICES, max_length=1)
+    date_posted = models.DateField(default=timezone.now)
     price = models.FloatField()
     description = models.TextField()
 
