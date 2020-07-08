@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from django.shortcuts import reverse
 
 GENRE_CHOICES = (
     ('A', 'Affairs'),
@@ -24,9 +25,13 @@ class Book(models.Model):
     date_posted = models.DateField(default=timezone.now)
     price = models.FloatField()
     description = models.TextField()
+    slug = models.SlugField()
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('shop:book', kwargs={'slug': self.slug})
 
 class Author(models.Model):
     name = models.CharField(max_length=150, unique=True)
