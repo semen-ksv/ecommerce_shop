@@ -1,5 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, View
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 from django.contrib import messages
 
@@ -23,6 +26,18 @@ class BookDetailView(DetailView):
     context_object_name = 'book'
 
 
+class OrderView(LoginRequiredMixin, View):
+
+    def get(self, *args, **kwargs):
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+            return render(self.request, "order_summary.html", {'order': order})
+        except ObjectDoesNotExist:
+            messages.error(self.request, 'You dont have order')
+            return redirect('/')
+
+
+@login_required
 def add_to_cart(request, slug):
     book = get_object_or_404(Book, slug=slug)
     order_book, created = OrderItem.objects.get_or_create(
@@ -47,6 +62,7 @@ def add_to_cart(request, slug):
         messages.info(request, 'This book was added to your cart')
     return redirect('shop:book', slug=slug)
 
+@login_required
 def remove_from_cart(request, slug):
     book = get_object_or_404(Book, slug=slug)
     order_queryset = Order.objects.filter(

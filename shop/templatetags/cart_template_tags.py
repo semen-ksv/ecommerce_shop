@@ -9,6 +9,5 @@ def cart_item_count(user):
     if user.is_authenticated:
         books = Order.objects.filter(user=user, ordered=False)
         if books.exists():
-            print(books[0].items.count())
             return books[0].items.count()
     return 0
