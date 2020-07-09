@@ -23,17 +23,17 @@
                             <td>{{ order_book.item.title }}</td>
                             <td>{{ order_book.item.price }}</td>
                             <td>
-                                {#                <a href="{% url 'shop:remove-single-item-from-cart' order_book.item.slug %}"><i class="fas fa-minus mr-2"></i></a>#}
+                                <a href="{% url 'shop:remove_book_in_cart' order_book.item.slug %}"><i class="fas fa-minus mr-2"></i></a>
                                 {{ order_book.quantity }}
-                                {#                <a href="{% url 'shop:add-to-cart' order_book.item.slug %}"><i class="fas fa-plus ml-2"></i></a>#}
+                                <a href="{% url 'shop:add_in_cart' order_book.item.slug %}"><i class="fas fa-plus ml-2"></i></a>
                             </td>
                             <td>
 
                                 ${{ order_book.get_total_item_price }}
 
-                                {#            <a style='color: red;' href="{% url 'shop:remove-from-cart' order_book.item.slug %}">#}
-                                {#                <i class="fas fa-trash float-right"></i>#}
-                                {#            </a>#}
+                                <a style='color: red;' href="{% url 'shop:remove_book_in_cart' order_book.item.slug %}">
+                                    <i class="fas fa-trash float-right"></i>
+                                </a>
                             </td>
                         </tr>
                     {% empty %}
