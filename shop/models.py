@@ -36,6 +36,9 @@ class Book(models.Model):
     def get_add_to_cart_url(self):
         return reverse('shop:add_to_cart', kwargs={'slug': self.slug})
 
+    def get_remove_from_cart_url(self):
+        return reverse('shop:remove_from_cart', kwargs={'slug': self.slug})
+
 
 class Author(models.Model):
     name = models.CharField(max_length=150, unique=True)
