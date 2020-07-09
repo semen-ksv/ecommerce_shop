@@ -1,0 +1,24 @@
+section.bg-text-area .bg-text {
+    background-image: url(/static/img/bg_wd.jpg);
+    background-size: 100% 100%;
+    padding: 80px 100px;
+}
+section.bg-text-area .bg-text h4 {
+    color: #fff;
+    font-family: Geometria;
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+section.bg-text-area .bg-text p {
+    color: #fff;
+    font-family: Geometria;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 33px;
+    margin: 32px 0 0;
+    text-align: center;
+}
