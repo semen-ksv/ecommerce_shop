@@ -1,71 +1,71 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <main>
-    <div class="container">
+    <main>
+        <div class="container">
 
-    <div class="table-responsive text-nowrap">
-    <h2>Order Summary</h2>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Book</th>
-            <th scope="col">Price</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Total Item Price</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for order_book in order.items.all %}
-        <tr>
-            <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ order_book.item.title }}</td>
-            <td>{{ order_book.item.price }}</td>
-            <td>
-{#                <a href="{% url 'shop:remove-single-item-from-cart' order_book.item.slug %}"><i class="fas fa-minus mr-2"></i></a>#}
-                {{ order_book.quantity }}
-{#                <a href="{% url 'shop:add-to-cart' order_book.item.slug %}"><i class="fas fa-plus ml-2"></i></a>#}
-            </td>
-{#            <td>#}
-{##}
-{#                ${{ order_book.get_total_item_price }}#}
-{##}
-{#            <a style='color: red;' href="{% url 'shop:remove-from-cart' order_book.item.slug %}">#}
-{#                <i class="fas fa-trash float-right"></i>#}
-{#            </a>#}
-{#            </td>#}
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan='5'>Your cart is empty</td>
-        </tr>
-        <tr>
-            <td colspan="5">
-            <a class='btn btn-primary float-right' href='/'>Continue shopping</a>
-            </td>
-        </tr>
-        {% endfor %}
+            <div class="table-responsive text-nowrap">
+                <h2>Order Summary</h2>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Book</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total Item Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order_book in order.items.all %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ order_book.item.title }}</td>
+                            <td>{{ order_book.item.price }}</td>
+                            <td>
+                                {#                <a href="{% url 'shop:remove-single-item-from-cart' order_book.item.slug %}"><i class="fas fa-minus mr-2"></i></a>#}
+                                {{ order_book.quantity }}
+                                {#                <a href="{% url 'shop:add-to-cart' order_book.item.slug %}"><i class="fas fa-plus ml-2"></i></a>#}
+                            </td>
+                            <td>
 
-        {% if object.get_total %}
-        <tr>
-            <td colspan="4"><b>Order Total</b></td>
-            <td><b>${{ object.get_total }}</b></td>
-        </tr>
-        <tr>
-            <td colspan="5">
-            <a class='btn btn-warning float-right ml-2' href='/checkout/'>Proceed to checkout</a>
-            <a class='btn btn-primary float-right' href='/'>Continue shopping</a>
-            </td>
-        </tr>
-        {% endif %}
-        </tbody>
-    </table>
+                                ${{ order_book.get_total_item_price }}
 
-    </div>
+                                {#            <a style='color: red;' href="{% url 'shop:remove-from-cart' order_book.item.slug %}">#}
+                                {#                <i class="fas fa-trash float-right"></i>#}
+                                {#            </a>#}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan='5'>Your cart is empty</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <a class='btn btn-primary float-right' href='/'>Continue shopping</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
 
-    </div>
-  </main>
+                    {% if order.get_total_price %}
+                        <tr>
+                            <td colspan="4"><b>Total order price</b></td>
+                            <td><b>${{ order.get_total_price }}</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <a class='btn btn-warning float-right ml-2' href='/checkout/'>By books</a>
+                                <a class='btn btn-primary float-right' href='/'>Continue shopping</a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </main>
 
 {% endblock content %}
 
